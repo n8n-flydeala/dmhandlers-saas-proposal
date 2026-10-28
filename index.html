@@ -186,7 +186,7 @@
   </main>
   <footer class="presentation-bar" id="presentation-bar" hidden aria-label="Presentation controls">
     <div class="presentation-info"><span class="slide-counter" id="slide-counter">01 / 12</span><span class="slide-name" id="slide-name">Overview</span></div>
-    <div class="presentation-actions"><button type="button" id="previous-slide" aria-label="Previous slide">← Prev</button><button type="button" class="next-slide" id="next-slide" aria-label="Next slide">Next →</button></div>
+    <div class="presentation-actions"><button type="button" id="fullscreen-toggle" aria-label="Full screen" aria-pressed="false" title="Toggle full screen (F)">Full screen ⛶</button><button type="button" id="previous-slide" aria-label="Previous slide">← Prev</button><button type="button" class="next-slide" id="next-slide" aria-label="Next slide">Next →</button></div>
     <span class="sr-only">Press F to toggle full screen.</span>
     <span class="sr-only" id="slide-announcement" aria-live="polite" aria-atomic="true"></span>
   </footer>
@@ -336,7 +336,13 @@
         document.getElementById('slide-announcement').textContent='Full screen is unavailable in this browser. You can still navigate the presentation normally.';
       }
     }
+    document.getElementById('fullscreen-toggle').addEventListener('click',toggleFullscreen);
     document.addEventListener('fullscreenchange',()=>{
+      const fullscreenButton=document.getElementById('fullscreen-toggle');
+      const isFullscreen=!!document.fullscreenElement;
+      fullscreenButton.textContent=isFullscreen?'Exit full screen ⛶':'Full screen ⛶';
+      fullscreenButton.setAttribute('aria-label',isFullscreen?'Exit full screen':'Full screen');
+      fullscreenButton.setAttribute('aria-pressed',String(isFullscreen));
       fitSlide();
     });
     window.addEventListener('hashchange',syncHash);
